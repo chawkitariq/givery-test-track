@@ -1,7 +1,7 @@
 /**
  * Application port used by the HTTP server.
  */
-export const port = process.env.PORT || 3000;
+export const port: number = +process.env.PORT! || 3000;
 
 /**
  * Required recipe fields used when validating creation requests.
