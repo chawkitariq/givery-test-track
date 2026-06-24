@@ -1,4 +1,11 @@
+/**
+ * Application port used by the HTTP server.
+ */
 export const port = process.env.PORT || 3000;
+
+/**
+ * Required recipe fields used when validating creation requests.
+ */
 export const requiredFields = [
   "title",
   "making_time",
@@ -7,6 +14,9 @@ export const requiredFields = [
   "cost",
 ];
 
+/**
+ * SQL script used to initialize the recipes table and seed data.
+ */
 export const initDbSql = `DROP TABLE IF EXISTS recipes;
 
 CREATE TABLE IF NOT EXISTS recipes (
