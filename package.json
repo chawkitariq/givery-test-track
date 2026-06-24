@@ -5,9 +5,9 @@
   "main": "index.js",
   "types": "module",
   "scripts": {
-    "dev": "tsx watch src/api.ts",
+    "dev": "tsx watch src/app.ts",
     "build": "tsc",
-    "start": "node dist/api.js"
+    "start": "node dist/app.js"
   },
   "keywords": [],
   "author": "",
@@ -19,7 +19,6 @@
     "mysql2": "^3.22.5"
   },
   "devDependencies": {
-    "@types/better-sqlite3": "^7.6.13",
     "@types/express": "^5.0.6",
     "@types/node": "^25.9.3",
     "tsx": "^4.22.4",
