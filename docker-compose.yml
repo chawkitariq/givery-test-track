@@ -6,12 +6,12 @@ services:
     volumes:
       - dbdata:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: test-track
-      MYSQL_PASSWORD: test-track
-      MYSQL_USER: test-track
-      MYSQL_DATABASE: test-track
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-test-track}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-test-track}
+      MYSQL_USER: ${DB_USER:-test-track}
+      MYSQL_DATABASE: ${DB_DATABASE:-test-track}
     ports:
-      - 3306:3306
+      - ${DB_PORT:-3306}:3306
 
 
 volumes:
