@@ -1,0 +1,18 @@
+services:
+
+  db:
+    image: mysql:9.7
+    restart: always
+    volumes:
+      - dbdata:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: test-track
+      MYSQL_PASSWORD: test-track
+      MYSQL_USER: test-track
+      MYSQL_DATABASE: test-track
+    ports:
+      - 3306:3306
+
+
+volumes:
+  dbdata:
