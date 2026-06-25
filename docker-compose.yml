@@ -1,18 +1,28 @@
 services:
-
   db:
-    image: mysql:9.7
-    restart: always
+    image: mariadb:11.4
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_PASSWORD:-test-track}
+      MARIADB_DATABASE: ${DB_DATABASE:-test-track}
+      MARIADB_USER: ${DB_USER:-test-track}
+      MARIADB_PASSWORD: ${DB_PASSWORD:-test-track}
     volumes:
       - dbdata:/var/lib/mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-test-track}
-      MYSQL_PASSWORD: ${DB_PASSWORD:-test-track}
-      MYSQL_USER: ${DB_USER:-test-track}
-      MYSQL_DATABASE: ${DB_DATABASE:-test-track}
     ports:
-      - ${DB_PORT:-3306}:3306
+      - "3306:3306"
 
+  api:
+    image: node:22-alpine
+    working_dir: /app
+    restart: unless-stopped
+    command: sh -c "npm ci && npm run dev"
+    volumes:
+      - .:/app
+    ports:
+      - "${PORT:-3000}:${PORT:-3000}"
+    depends_on:
+      - db
 
 volumes:
   dbdata:
