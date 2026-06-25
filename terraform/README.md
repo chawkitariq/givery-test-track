@@ -1,28 +1,28 @@
 # Terraform AWS Infra
 
-Infra minimale pour:
+Minimal AWS infrastructure for:
 
-- une RDS MariaDB privée
-- une EC2 légère pour l'app Express
-- les security groups et l'IAM nécessaires
-- un bootstrap EC2 qui clone le repo, installe les dépendances, build et démarre l'app
+- a private MariaDB RDS database
+- a lightweight EC2 instance for the Express app
+- the required security groups and IAM permissions
+- an EC2 bootstrap script that clones the repo, installs dependencies, builds the app, and starts it
 
-## Prérequis
+## Prerequisites
 
-- Un VPC existant
-- Au moins 1 subnet public pour l'EC2
-- Au moins 2 subnets privés pour la RDS
-- Une URL Git accessible depuis l'EC2
+- An existing VPC
+- At least 1 public subnet for EC2
+- At least 2 private subnets for RDS
+- A Git repository URL reachable from the EC2 instance
 
-## Utilisation
+## Usage
 
-1. Copier `terraform.tfvars.example` vers `terraform.tfvars`
-2. Renseigner les valeurs des variables
-3. Lancer:
+1. Copy `terraform.tfvars.example` to `terraform.tfvars`
+2. Fill in the variable values
+3. Run:
 
 ```bash
-terraform -chdir=terraform init
-terraform -chdir=terraform plan
-terraform -chdir=terraform apply
+terraform init
+terraform plan
+terraform apply
 ```
 
