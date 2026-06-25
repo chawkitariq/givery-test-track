@@ -18,7 +18,7 @@ export async function createRecipeHandler(req: Request, res: Response) {
   );
 
   if (!hasAllRequiredFiels || hasNullField(req.body)) {
-    return res.status(404).json({
+    return res.status(200).json({
       message: "Recipe creation failed!",
       required: "title, making_time, serves, ingredients, cost",
     });
