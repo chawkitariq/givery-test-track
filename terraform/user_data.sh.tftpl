@@ -1,0 +1,24 @@
+#!/bin/bash
+set -euo pipefail
+
+dnf install -y git nodejs
+
+until bash -c "</dev/tcp/${db_host}/3306" >/dev/null 2>&1; do sleep 5; done
+
+cd /opt
+rm -rf /opt/app
+git clone --branch main "${repository_url}" /opt/app
+cd /opt/app
+
+cat > .env <<EOF
+PORT=${app_port}
+DB_HOST=${db_host}
+DB_PORT=3306
+DB_USER=${db_username}
+DB_PASSWORD=${db_password}
+DB_NAME=${db_name}
+EOF
+
+npm ci
+npm run build
+nohup npm start > /opt/app/app.log 2>&1 &
