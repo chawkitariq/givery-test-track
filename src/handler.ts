@@ -77,7 +77,7 @@ export async function deleteRecipeHandler(req: Request, res: Response) {
   const isDeleted = await deleteOneRecipe(+req.params.id);
 
   if (!isDeleted) {
-    return res.status(404).json({
+    return res.status(200).json({
       message: "No recipe found",
     });
   }
