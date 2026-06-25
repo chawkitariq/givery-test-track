@@ -57,7 +57,7 @@ export async function getRecipeHandler(req: Request, res: Response) {
  */
 export async function updateRecipeHandler(req: Request, res: Response) {
   if (hasNullField(req.body)) {
-    return res.status(404).json({
+    return res.status(200).json({
       message: "Recipe fields must not be null!",
     });
   }
