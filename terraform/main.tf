@@ -33,6 +33,14 @@ resource "aws_security_group" "ec2" {
   vpc_id      = var.vpc_id
 
   ingress {
+    description = "SSH from your workstation"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = [var.ssh_allowed_cidr]
+  }
+
+  ingress {
     description = "HTTP application traffic"
     from_port   = var.app_port
     to_port     = var.app_port
@@ -107,6 +115,15 @@ resource "aws_iam_instance_profile" "ec2" {
   role = aws_iam_role.ec2.name
 }
 
+resource "aws_key_pair" "ec2" {
+  key_name   = "${var.project_name}-ssh"
+  public_key = file(pathexpand(var.ssh_public_key_path))
+
+  tags = {
+    Name = "${var.project_name}-ssh"
+  }
+}
+
 resource "aws_db_instance" "mariadb" {
   identifier = "${var.project_name}-mariadb"
 
@@ -153,7 +170,9 @@ resource "aws_instance" "app" {
   vpc_security_group_ids      = [aws_security_group.ec2.id]
   associate_public_ip_address = true
   iam_instance_profile        = aws_iam_instance_profile.ec2.name
+  key_name                    = aws_key_pair.ec2.key_name
   user_data                   = local.user_data
+  user_data_replace_on_change = true
 
   root_block_device {
     volume_type = "gp3"
@@ -168,5 +187,6 @@ resource "aws_instance" "app" {
   depends_on = [
     aws_db_instance.mariadb,
     aws_iam_role_policy_attachment.ec2_ssm,
+    aws_key_pair.ec2,
   ]
 }

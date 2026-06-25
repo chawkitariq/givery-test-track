@@ -17,7 +17,7 @@ Infra minimale pour:
 ## Utilisation
 
 1. Copier `terraform.tfvars.example` vers `terraform.tfvars`
-2. Renseigner `vpc_id`, `public_subnet_id`, `private_subnet_ids`, `repository_url` et `db_password`
+2. Renseigner les valeurs des variables
 3. Lancer:
 
 ```bash
@@ -26,8 +26,3 @@ terraform -chdir=terraform plan
 terraform -chdir=terraform apply
 ```
 
-## Sorties
-
-- `ec2_public_ip`
-- `app_url`
-- `rds_endpoint`

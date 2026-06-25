@@ -8,6 +8,8 @@ private_subnet_ids = [
 ]
 
 repository_url    = "https://github.com/your-org/your-repo.git"
+ssh_public_key_path = "/home/your-user/.ssh/id_ed25519.pub"
+ssh_allowed_cidr  = "YOUR_PUBLIC_IP/32"
 
 db_name     = "testtrack"
 db_username = "testtrack"

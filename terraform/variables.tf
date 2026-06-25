@@ -53,3 +53,13 @@ variable "app_port" {
   type        = number
   default     = 3000
 }
+
+variable "ssh_public_key_path" {
+  description = "Chemin local vers la cle publique SSH a importer dans AWS pour l'instance EC2."
+  type        = string
+}
+
+variable "ssh_allowed_cidr" {
+  description = "CIDR autorise a se connecter en SSH a l'instance EC2, par exemple votre IP publique en /32."
+  type        = string
+}

@@ -3,7 +3,8 @@ set -euo pipefail
 
 dnf install -y git nodejs
 
-until bash -c "</dev/tcp/${db_host}/3306" >/dev/null 2>&1; do sleep 5; done
+mkdir -p /opt/rds-certs
+curl -fsSL https://truststore.pki.rds.amazonaws.com/global/global-bundle.pem -o /opt/rds-certs/global-bundle.pem
 
 cd /opt
 rm -rf /opt/app
@@ -11,14 +12,19 @@ git clone --branch main "${repository_url}" /opt/app
 cd /opt/app
 
 cat > .env <<EOF
+NODE_ENV=production
 PORT=${app_port}
 DB_HOST=${db_host}
 DB_PORT=3306
 DB_USER=${db_username}
 DB_PASSWORD=${db_password}
 DB_NAME=${db_name}
+DB_SSL_CA_PATH=/opt/rds-certs/global-bundle.pem
 EOF
 
 npm ci
 npm run build
+
+until bash -c "</dev/tcp/${db_host}/3306" >/dev/null 2>&1; do sleep 5; done
+
 nohup npm start > /opt/app/app.log 2>&1 &
